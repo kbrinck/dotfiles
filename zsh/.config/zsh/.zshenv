@@ -28,7 +28,7 @@ fi
 # Personal binaries/scripts
 # -----------------------------------------------------------------------------
 
-export Path="$HOME/.bin:$PATH"
+export PATH="$HOME/.bin:$PATH"
 
 # -----------------------------------------------------------------------------
 # Possibly needed to get ssh-agent working

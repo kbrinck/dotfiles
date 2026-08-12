@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+#
+# inotify-watches.sh — list inotify watch counts per process, sorted
+# descending by watch count, with a grand total.
+#
+# Must be run as root (or with sudo) to see other users' fdinfo details.
+
+set -u
+
+declare -A watch_by_name
+grand_total=0
+
+for pid_dir in /proc/[0-9]*; do
+    pid=${pid_dir#/proc/}
+    [ -r "$pid_dir/fd" ] || continue
+
+    # Process name (comm), fall back if it disappears mid-scan
+    comm=$(cat "$pid_dir/comm" 2>/dev/null) || continue
+
+    pid_watch_count=0
+
+    for fd in "$pid_dir"/fd/*; do
+        [ -e "$fd" ] || continue
+        link=$(readlink "$fd" 2>/dev/null) || continue
+
+        if [[ "$link" == "anon_inode:inotify" ]]; then
+            fdnum=${fd##*/}
+            fdinfo="$pid_dir/fdinfo/$fdnum"
+            [ -r "$fdinfo" ] || continue
+
+            # Count one line per watch descriptor
+            count=$(grep -c '^inotify wd:' "$fdinfo" 2>/dev/null) || count=0
+            pid_watch_count=$(( pid_watch_count + count ))
+        fi
+    done
+
+    if (( pid_watch_count > 0 )); then
+        watch_by_name["$comm"]=$(( ${watch_by_name["$comm"]:-0} + pid_watch_count ))
+        grand_total=$(( grand_total + pid_watch_count ))
+    fi
+done
+
+if (( ${#watch_by_name[@]} == 0 )); then
+    echo "No inotify watches found (try running as root/sudo)."
+    exit 0
+fi
+
+printf "%-30s %10s\n" "PROCESS" "WATCHES"
+printf "%-30s %10s\n" "-------" "-------"
+
+for name in "${!watch_by_name[@]}"; do
+    printf "%-30s %10d\n" "$name" "${watch_by_name[$name]}"
+done | sort -k2,2nr
+
+printf "%-30s %10s\n" "-------" "-------"
+printf "%-30s %10d\n" "TOTAL" "$grand_total"

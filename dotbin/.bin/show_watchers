@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+declare -A watches
+
+for pid_dir in /proc/[0-9]*; do
+    [[ -r "$pid_dir/comm" ]] || continue
+
+    name=$(<"$pid_dir/comm")
+    total=0
+
+    for fdinfo in "$pid_dir"/fdinfo/*; do
+        [[ -r "$fdinfo" ]] || continue
+        n=$(grep -c '^inotify wd:' "$fdinfo" 2>/dev/null)
+        (( total += n ))
+    done
+
+    (( total > 0 )) && (( watches["$name"] += total ))
+done
+
+printf "%-40s %12s\n" "PROCESS" "WATCHES"
+printf "%-40s %12s\n" "----------------------------------------" "------------"
+
+for name in "${!watches[@]}"; do
+    printf "%-40s %12d\n" "$name" "${watches[$name]}"
+done | sort -k2,2nr
+
+total=0
+for n in "${watches[@]}"; do
+    (( total += n ))
+done
+
+printf "%-40s %12d\n" "TOTAL" "$total"

@@ -31,23 +31,24 @@ then
 	alias cat="bat"
 fi
 
-if [ -e /usr/bin/rg ]
-then
-	alias ogrep=/usr/bin/grep
-	alias grep="rg --color=auto"
-fi
+# if [ -e /usr/bin/rg ]
+# then
+# 	alias ogrep=/usr/bin/grep
+# 	alias grep="rg --color=auto"
+# fi
 
-if [ -e /usr/bin/fd ]
-then
-	alias ofind=/usr/bin/find
-	alias find="fd"
-fi
+# if [ -e /usr/bin/fd ]
+# then
+# 	alias ofind=/usr/bin/find
+# 	alias find="fd"
+# fi
 
-if [ -e /usr/bin/difft ]
-then
-	alias odiff=/usr/bin/diff
-	alias diff="difft"
-fi
+# if [ -e /usr/bin/difft ]
+# then
+# 	alias odiff=/usr/bin/diff
+# 	alias diff="difft"
+# fi
+
 # -----------------------------------------------------------------------------
 # Aliases for fast editing of various config files
 # -----------------------------------------------------------------------------
@@ -65,6 +66,7 @@ alias ...='cd ../..'              # Type "..." to go up two directories
 alias c="clear"
 alias df="df -h"
 alias nv="nvim"
+alias nvq="nvim-qt"
 
 # -----------------------------------------------------------------------------
 # GIT-related aliases

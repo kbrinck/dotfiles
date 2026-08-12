@@ -5,5 +5,3 @@
 require("config.lazy")		-- Bootstrap lazy itself
 require("config.options")	-- Miscellaneous options
 
-vim.opt.termguicolors = true
-vim.cmd.colorscheme("gvim")
