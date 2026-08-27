@@ -1,0 +1,65 @@
+table.insert(dap.configurations.python, {
+  type = "python",
+  request = "launch",
+  name = "file:args with @files",
+  program = "${file}",
+  console = "integratedTerminal",
+  cwd = project_root,
+  pythonPath = python,
+
+  env = {
+    PYTHONPATH = project_root .. "/src",
+  },
+
+  args = function()
+    local input = vim.fn.input("Args: ")
+
+    if input == "" then
+      return {}
+    end
+
+    local supplied_args = vim.split(input, "%s+", { trimempty = true })
+    local args = {}
+
+    for _, arg in ipairs(supplied_args) do
+      if vim.startswith(arg, "@") then
+        local filename = arg:sub(2)
+
+        -- Look in the current directory first.
+        local path = filename
+
+        -- If not there, look in configurations/.
+        if vim.fn.filereadable(path) == 0 then
+          path = "configurations/" .. filename
+        end
+
+        if vim.fn.filereadable(path) == 0 then
+          vim.notify(
+            "Argument file not found: " .. filename,
+            vim.log.levels.ERROR
+          )
+          return {}
+        end
+
+        -- Expand the contents of the argument file.
+        for _, line in ipairs(vim.fn.readfile(path)) do
+          line = vim.trim(line)
+
+          -- Ignore comments and blank lines.
+          if line ~= "" and not vim.startswith(line, "#") then
+            for _, file_arg in ipairs(
+              vim.split(line, "%s+", { trimempty = true })
+            ) do
+              table.insert(args, file_arg)
+            end
+          end
+        end
+      else
+        -- Normal argument: pass it through unchanged.
+        table.insert(args, arg)
+      end
+    end
+
+    return args
+  end,
+})

@@ -1,0 +1,123 @@
+#!/usr/bin/env bash
+
+# Usage:
+#   git-diff-worktree.sh [-e] [-p] [-v] [-n] <worktree-name> <file> [file ...]
+#
+# Options:
+#   -e    Open differing files in nvim diff mode
+#   -p    Print the path to the other worktree
+#   -v    Print the nvim diff command before executing it
+#   -n    Dry run: print each file and the action, but don't execute it
+#
+# Without -e: list files that differ
+
+edit=false
+print_path=false
+verbose=false
+dry_run=false
+
+while getopts ":epvn" opt; do
+    case "$opt" in
+        e) edit=true ;;
+        p) print_path=true ;;
+        v) verbose=true ;;
+        n) dry_run=true ;;
+        *)
+            echo "Usage: $0 [-e] [-p] [-v] [-n] <worktree-name> <file> [file ...]" >&2
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [[ $# -lt 2 ]]; then
+    echo "Usage: $0 [-e] [-p] [-v] [-n] <worktree-name> <file> [file ...]" >&2
+    exit 1
+fi
+
+worktree_name=$1
+shift
+
+# Find the current worktree root.
+current_worktree=$(git rev-parse --show-toplevel) || exit 1
+
+# Find the path of the requested worktree.
+worktree_path=$(
+    git worktree list --porcelain |
+    awk -v name="$worktree_name" '
+        /^worktree / {
+            path = substr($0, 10)
+            if (path == name || path ~ "/" name "$")
+                found = path
+        }
+        END {
+            if (found)
+                print found
+        }
+    '
+)
+
+if [[ -z "$worktree_path" ]]; then
+    echo "Error: worktree '$worktree_name' not found." >&2
+    exit 1
+fi
+
+if "$print_path"; then
+    echo "$worktree_path"
+fi
+
+for file in "$@"; do
+
+    # Convert the supplied path to an absolute path, then replace
+    # the current worktree root with the other worktree root.
+    if [[ "$file" = /* ]]; then
+        current_file=$file
+    else
+        current_file=$PWD/$file
+    fi
+
+    other_file="${current_file/#"$current_worktree"/"$worktree_path"}"
+
+    # Ignore files that don't exist in the current worktree.
+    if [[ ! -f "$current_file" ]]; then
+        if "$dry_run"; then
+            echo "$file: SKIP (file does not exist)"
+        fi
+        continue
+    fi
+
+    # Ignore files that don't exist in the other worktree.
+    if [[ ! -f "$other_file" ]]; then
+        if "$dry_run"; then
+            echo "$file: SKIP (missing from $worktree_name)"
+        fi
+        continue
+    fi
+
+    # Ignore identical files.
+    if cmp -s "$current_file" "$other_file"; then
+        if "$dry_run"; then
+            echo "$file: SAME (no action)"
+        fi
+        continue
+    fi
+
+    if "$dry_run"; then
+        if "$edit"; then
+            echo "$file: DIFF -> nvim -d"
+        else
+            echo "$file: DIFF -> list"
+        fi
+        continue
+    fi
+
+    if "$edit"; then
+        if "$verbose"; then
+            printf 'nvim -d %q %q\n' "$current_file" "$other_file"
+        fi
+
+        nvim -d "$current_file" "$other_file"
+    else
+        echo "$file"
+    fi
+done

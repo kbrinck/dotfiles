@@ -12,58 +12,12 @@ return {
       local dapui = require("dapui")
       local dap_python = require("dap-python")
 
-      --- Set Key bindings
-      vim.keymap.set("n", "<F5>", dap.continue)
-      vim.keymap.set("n", "<F10>", dap.step_over)
-      vim.keymap.set("n", "<F11>", dap.step_into)
-      vim.keymap.set("n", "<F12>", dap.step_out)
-
-      --- Find the python environment to use
-      
-      local function find_venv()
-        local file = vim.api.nvim_buf_get_name(0)
-  
-        if file == "" then
-          return nil, nil
-        end
-  
-        local dir = vim.fs.dirname(file)
-  
-        while dir do
-          local python = dir .. "/venv/bin/python"
-  
-          if vim.fn.executable(python) == 1 then
-            return python, dir
-          end
-  
-          local parent = vim.fs.dirname(dir)
-          if parent == dir then
-            break
-          end
-          dir = parent
-        end
-  
-        return nil, nil
-      end
-
       require("dapui").setup({})
       require("nvim-dap-virtual-text").setup({
         commented = true, -- Show virtual text alongside comment
       })
 
-      local python, project_root = find_venv()
-
-      if python then
-        dap_python.setup(python)
-  
-        for _, config in ipairs(dap.configurations.python) do
-          config.cwd = project_root
-          --- KB delete? config.pythonPath = python
-  
-          config.env = config.env or {}
-          config.env.PYTHONPATH = project_root .. "/src"
-        end
-      end
+      dap_python.setup("python3")
 
       vim.fn.sign_define("DapBreakpoint", {
         text = "",

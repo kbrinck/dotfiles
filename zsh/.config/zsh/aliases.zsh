@@ -66,6 +66,7 @@ alias ...='cd ../..'              # Type "..." to go up two directories
 alias c="clear"
 alias df="df -h"
 alias nv="nvim"
+alias nvd='nvim -c "lua require(\"dapui\").open()"'
 alias nvq="nvim-qt"
 
 # -----------------------------------------------------------------------------

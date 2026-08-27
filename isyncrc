@@ -1,0 +1,22 @@
+IMAPAccount gmail
+Host imap.gmail.com
+Port 993
+User kbrinck@gmail.com
+PassCmd "secret-tool lookup service aerc-gmail"
+TLSType IMAPS
+SystemCertificates yes
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Path ~/.mail/gmail/
+Inbox ~/.mail/gmail/Inbox
+SubFolders Verbatim
+
+Channel gmail
+Far :gmail-remote:
+Near :gmail-local:
+Patterns *
+Create Both
+SyncState *

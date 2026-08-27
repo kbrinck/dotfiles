@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+config_dir="configurations"
+output_file=".dap-args"
+
+# Check for debug option
+debug=false
+
+if [[ "$1" == "-d" ]]; then
+    debug=true
+fi
+
+files=( "$config_dir"/runargs_* )
+
+# Check that files exist
+if [[ ! -e "${files[0]}" ]]; then
+    echo "No runargs_ files found in $config_dir" >&2
+    exit 1
+fi
+
+echo "Available configurations:"
+echo
+
+for i in "${!files[@]}"; do
+    file="${files[$i]}"
+
+    # Get the first line
+    description=$(head -n 1 "$file")
+
+    # Remove leading whitespace, then "# " or "#"
+    description="${description#"${description%%[![:space:]]*}"}"
+    description="${description#\# }"
+    description="${description#\#}"
+
+    printf "%2d) %s\n" "$((i + 1))" "$description"
+done
+
+echo
+read -rp "Select configuration: " selection
+
+# Validate selection
+if ! [[ "$selection" =~ ^[0-9]+$ ]] ||
+   (( selection < 1 || selection > ${#files[@]} )); then
+    echo "Invalid selection." >&2
+    exit 1
+fi
+
+selected="${files[$((selection - 1))]}"
+
+# Remove comments and blank lines, then split remaining
+# arguments on whitespace, writing each argument on its own line.
+awk '
+    /^[[:space:]]*#/ { next }
+    /^[[:space:]]*$/  { next }
+    {
+        for (i = 1; i <= NF; i++)
+            print $i
+    }
+' "$selected" > "$output_file"
+
+echo
+echo "Selected: $selected"
+echo "Arguments written to: $output_file"
+
+# Run main.py
+if "$debug"; then
+    nvd main.py
+else
+    "$(realpath ../venv/bin/python)" main.py
+fi

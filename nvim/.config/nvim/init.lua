@@ -2,6 +2,9 @@
 --
 
 --
-require("config.lazy")		-- Bootstrap lazy itself
-require("config.options")	-- Miscellaneous options
+require("config.lazy")		    -- Bootstrap lazy itself
+require("config.options")	    -- Miscellaneous options
+require("config.keybindings")	-- Miscellaneous options
+
+vim.lsp.enable("pyright")
 

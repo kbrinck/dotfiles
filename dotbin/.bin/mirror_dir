@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+# Mirror the current directory and all its contents to a target directory.
+# Nothing is ever deleted from the target.
+#
+# Usage:
+#   ./mirror.sh [-n] <target-directory>
+#
+# Options:
+#   -n    Dry run: show what would be done without making changes
+
+dry_run=false
+
+while getopts ":n" opt; do
+    case "$opt" in
+        n) dry_run=true ;;
+        *)
+            echo "Usage: $0 [-n] <target-directory>" >&2
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $0 [-n] <target-directory>" >&2
+    exit 1
+fi
+
+source=$(pwd)
+target=$1
+
+# Convert a relative target path to an absolute path.
+if [[ "$target" != /* ]]; then
+    target="$source/$target"
+fi
+
+# Prevent copying into the source itself.
+if [[ "$source" == "$target" ]]; then
+    echo "Error: target directory is the current directory." >&2
+    exit 1
+fi
+
+if "$dry_run"; then
+    rsync -avhn -- "$source/" "$target/"
+else
+    rsync -avh -- "$source/" "$target/"
+fi

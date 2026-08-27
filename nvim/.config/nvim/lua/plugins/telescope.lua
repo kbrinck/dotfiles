@@ -19,7 +19,10 @@ return {
 		local builtin = require('telescope.builtin')
 
 		keymap.set('n', '<leader>ff', builtin.find_files, opts)
-		keymap.set('n', '<leader>fs', builtin.live_grep, opts)
-		keymap.set('n', '<leader>fh', builtin.oldfiles, opts)
+		keymap.set('n', '<leader>fg', builtin.live_grep, opts)
+		keymap.set('n', '<leader>fs', builtin.grep_string, opts)
+		keymap.set('n', '<leader>fb', builtin.buffers, opts)
+		keymap.set('n', '<leader>fo', builtin.oldfiles, opts)
+		keymap.set('n', '<leader>fh', builtin.help_tags, opts)
 	end,
 }

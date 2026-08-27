@@ -61,7 +61,7 @@ fi
 # Initialise smart directory navigation (zoxide) and replace shell built-in cd
 # -----------------------------------------------------------------------------
 
-eval "$(zoxide init zsh --cmd cd)"
+eval "$(zoxide init zsh --cmd z)"
 
 # -----------------------------------------------------------------------------
 # SSH-agent / KDE integration

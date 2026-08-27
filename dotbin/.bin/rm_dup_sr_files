@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+dry_run=false
+
+while getopts ":n" opt; do
+    case "$opt" in
+        n) dry_run=true ;;
+        \?) echo "Usage: $0 [-n] file ..." >&2
+            exit 2 ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if (( $# == 0 )); then
+    echo "Usage: $0 [-n] file ..." >&2
+    exit 2
+fi
+
+# Directory from which the script was run
+base_dir=$PWD
+
+for file in "$@"; do
+    if [[ ! -f "$file" ]]; then
+        echo "Not a regular file: $file" >&2
+        continue
+    fi
+
+    name=$(basename "$file")
+    found=false
+
+    # Find files with the same name in subdirectories only.
+    while IFS= read -r -d '' candidate; do
+        if cmp -s -- "$file" "$candidate"; then
+            echo "Duplicate: $file"
+            echo "  identical to: $candidate"
+
+            if $dry_run; then
+                printf '  rm -- %q\n' "$file"
+            else
+                rm -- "$file"
+            fi
+
+            found=true
+            break
+        fi
+    done < <(
+        find "$base_dir" -mindepth 2 -type f -name "$name" -print0
+    )
+
+    if ! $found; then
+        echo "No duplicate: $file"
+    fi
+done

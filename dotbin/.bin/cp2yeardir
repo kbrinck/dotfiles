@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+# Copy files beginning with YYYY-MM-DD_ into a subdirectory named YYYY.
+# Run this script from the directory containing the files.
+#
+# Usage:
+#   ./copy-by-year.sh       # copy files
+#   ./copy-by-year.sh -n    # dry run
+
+dry_run=false
+
+while getopts ":n" opt; do
+    case "$opt" in
+        n) dry_run=true ;;
+        *)
+            echo "Usage: $0 [-n]" >&2
+            exit 1
+            ;;
+    esac
+done
+
+shopt -s nullglob
+
+for file in ????-??-??_*; do
+    [[ -f "$file" ]] || continue
+
+    # Verify the date prefix has the expected format.
+    [[ "$file" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}_ ]] || continue
+
+    year=${file:0:4}
+    destination="$year/$file"
+
+    if "$dry_run"; then
+        printf 'mkdir -p %q\n' "$year"
+        printf 'mv %q %q\n' "$file" "$destination"
+    else
+        mkdir -p -- "$year"
+        mv -- "$file" "$destination"
+    fi
+done
