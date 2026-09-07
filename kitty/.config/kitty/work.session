@@ -1,0 +1,12 @@
+new_tab "Shell"
+launch zsh
+
+new_tab "Neovim"
+launch --cwd ~/Dev zsh -c 'exec nvim'
+
+new_tab "Keybinds"
+launch --cwd ~/.config/nvim zsh -c 'exec nvim keybinds.txt'
+
+new_tab "Codex"
+launch --cwd ~/Dev/ zsh -c 'exec codex'
+

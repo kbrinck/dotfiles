@@ -30,7 +30,7 @@ return {
         local dir = vim.fs.dirname(file)
   
         while dir do
-          local python = dir .. "/venv/bin/python"
+          local python = dir .. "/.venv/bin/python"
   
           if vim.fn.executable(python) == 1 then
             return python, dir

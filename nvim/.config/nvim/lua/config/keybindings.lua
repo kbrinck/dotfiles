@@ -31,6 +31,18 @@ vim.keymap.set("n", "gi", function()
   require("telescope.builtin").lsp_implementations()
 end, { desc = "Go to implementation" })
 
+vim.keymap.set("n", "<leader>nc", function()
+  require("telescope.builtin").find_files({
+    cwd = vim.fn.expand("~/.config/nvim"),
+  })
+end, { desc = "Find nvim config files" })
+
+vim.keymap.set("n", "<leader>zc", function()
+  require("telescope.builtin").find_files({
+    cwd = vim.fn.expand("~/.config/zsh"),
+  })
+end, { desc = "Find zsh config files" })
+
 vim.keymap.set("n", "K", vim.lsp.buf.hover, {
   desc = "Show documentation",
 })

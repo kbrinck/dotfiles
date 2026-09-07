@@ -4,7 +4,8 @@
 # Reload ZSH configuration files
 # -----------------------------------------------------------------------------
 
-alias S='source $XDG_CONFIG_HOME/zsh/.zshrc'
+#alias S='source $XDG_CONFIG_HOME/zsh/.zshrc'
+alias S='exec zsh'
 
 # -----------------------------------------------------------------------------
 # Remapping of existing system commands with "better" versions.
@@ -88,3 +89,4 @@ alias gcb="git checkout"
 
 alias python='python3'            # Type "python" to run Python 3
 alias pip='pip3'                  # Type "pip" to use pip3
+alias ruffc='uv run ruff check --output-format=full'

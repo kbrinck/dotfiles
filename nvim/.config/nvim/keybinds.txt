@@ -1,0 +1,68 @@
+
+FILE                MODE  KEY / COMMAND             ACTION
+──────────────────────────────────────────────────────────────────────────────
+bufdelete.lua       n     <C-q>                     Delete buffer
+
+bufferline.lua      —     —                         local map = vim.keymap.set
+                    n     <A-Left>                  Cycle prev buffer line
+                    n     <A-Right>                 Cycle next buffer line
+                    n     <A-h>                     Cycle prev buffer line
+                    n     <A-l>                     Cycle next buffer line
+                    n     <leader>bq                Close buffer
+                    n     <leader>bQ                Close all other buffers
+
+floatterm.lua       —     <leader>tN                New float term
+                    —     <leader>tp                Previous float term
+                    —     <leader>tn                Next float term
+                    —     <leader>tt                Toggle float term
+                    n     <F5>                      New float term
+                    i     <F5>                      New float term
+                    n     <leader>tr                New float term
+
+fzf-lua.lua         n     <leader>ff                files
+                    n     <leader>fg                live_grep
+                    n     <leader>fb                buffers
+                    n     <leader>fh                help_tags
+
+lazygit.lua         n     <leader>gg                Lazy Git
+                    n     <leader>gc                Lazy Git config
+                    n     <leader>gf                Lazy Git current file
+
+nvim-dap.lua        n     <F5>                      Continue
+                    n     <F10>                     Step over
+                    n     <F11>                     Step into
+                    n     <F12>                     Step out
+                    n     <leader>db                Toggle breakpoint
+                    n     <leader>dc                Continue
+                    n     <leader>do                Step over
+                    n     <leader>di                Step into
+                    n     <leader>dO                Step out
+                    n     <leader>dq                Quit
+                    n     <leader>du                Toggle UI
+
+nvim-tree.lua       n     <leader>e                 Toggle file explorer pane
+                    n     <leader>v                 open vertical
+                    n     <leader>h                 open horizontal
+
+pyright.lua         n     <leader>fu                File browser
+                    n     gd                        Goto definition
+                    n     gr                        Find references
+                    n     gi                        Goto implementation
+                    n     K                         Show documentation
+
+telescope.lua       n     <leader>tf                Find files
+                    n     <leader>tg                Live grep
+                    n     <leader>tgs               Grep string
+                    n     <leader>tb                Buffers
+                    n     <leader>to                Old files
+                    n     <leader>th                Help tags
+                    n     <leader>nc                View Nvim config files
+                    n     <leader>zc                View Zsh config files
+
+todo-comments.lua   —     —                         keywords
+
+treesitter.lua      —     —                         keymaps
+
+which-key.lua       —     —                         which-key.nvim
+
+worktree-diff.lua   n     <leader>wd                Worktree diff
