@@ -65,6 +65,7 @@ alias zrca='nvim $XDG_CONFIG_HOME/zsh/aliases.zsh'
 alias ..='cd ..'                  # Type ".." to go up one directory
 alias ...='cd ../..'              # Type "..." to go up two directories
 alias c="clear"
+alias cb="clear && printf '\e[3J'"  # Clear scroll back buffer as well
 alias df="df -h"
 alias nv="nvim"
 alias nvd='nvim -c "lua require(\"dapui\").open()"'

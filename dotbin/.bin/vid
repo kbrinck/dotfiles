@@ -19,7 +19,7 @@ do
 
 	if ! cmp -s $FILE1 $FILE2
 	then
-		gvim -d $FILE1 $FILE2
+		nvim -d $FILE1 $FILE2
 		wait
 	fi
 done
