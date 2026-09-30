@@ -1,6 +1,8 @@
 
 FILE                MODE  KEY / COMMAND             ACTION
 ──────────────────────────────────────────────────────────────────────────────
+aerial              n     <leader>so                Toggle symbols outline
+
 bufdelete.lua       n     <C-q>                     Delete buffer
 
 bufferline.lua      —     —                         local map = vim.keymap.set
@@ -19,10 +21,15 @@ floatterm.lua       —     <leader>tN                New float term
                     i     <F5>                      New float term
                     n     <leader>tr                New float term
 
-fzf-lua.lua         n     <leader>ff                files
-                    n     <leader>fg                live_grep
-                    n     <leader>fb                buffers
-                    n     <leader>fh                help_tags
+fzf-lua.lua         n     <leader>ff                Files
+                    n     <leader>fg                Live grep
+                    n     <leader>fb                Buffers
+                    n     <leader>fh                Help tags
+
+fugitive            n     <leader>dg                Git diff current file
+                    n     <leader>gb                Git blame
+                    N     <leader>gs                Git status
+
 
 lazygit.lua         n     <leader>gg                Lazy Git
                     n     <leader>gc                Lazy Git config
@@ -41,14 +48,22 @@ nvim-dap.lua        n     <F5>                      Continue
                     n     <leader>du                Toggle UI
 
 nvim-tree.lua       n     <leader>e                 Toggle file explorer pane
-                    n     <leader>v                 open vertical
-                    n     <leader>h                 open horizontal
+                    n     <leader>v                 Open vertical
+                    n     <leader>h                 Open horizontal
+
+obsidian            n     <leader>nn                New note
+                    n     <leader>on                Open notes
+
+options             n     <leader>gv                Toggle colorscheme
 
 pyright.lua         n     <leader>fu                File browser
                     n     gd                        Goto definition
                     n     gr                        Find references
                     n     gi                        Goto implementation
                     n     K                         Show documentation
+
+show_keybinds       n     <leader>kb                Show keybindings file
+                    n     <leader>Kb                Run keybindings cmd
 
 telescope.lua       n     <leader>tf                Find files
                     n     <leader>tg                Live grep
@@ -65,4 +80,40 @@ treesitter.lua      —     —                         keymaps
 
 which-key.lua       —     —                         which-key.nvim
 
-worktree-diff.lua   n     <leader>wd                Worktree diff
+worktree-diff.lua   n     <leader>wd                Diff against other GIT worktree
+
+--- Folds and diffs
+
+Folds               n     zo                        Open/expand the fold under the cursor
+                    n     zc                        Close the fold
+                    n     za                        Toggle the fold
+                    n     zR                        Open all folds
+                    n     zM                        Close all folds
+
+Diffs               n     ]c                        Next change
+                    n     [c                        Previous change
+                    n     dp                        Push across current change
+                    n     do                        Pull across current change
+                    n     <F2>                      Push across current change and move to next one
+                    n     <F3>                      Push across current change
+                    n     <F4>                      Pull across current change
+                    n     <F5>                      Push all diff changes
+                    n     <F6>                      Pull all diff changes
+
+                    :     :diffupdate               Recalculate/update the diff
+                    :     :diffoff                  Turn off diff mode for the current window
+                    :     :diffthis                 Enable diff mode for the current window
+                    :     :set diffopt?             See your diff options
+
+--- Config files
+
+                    n     <leader>bnc               Browse Neovim config
+                    n     <leader>npf               Find Neovim plugin files
+                    n     <leader>ncf               Find nvim config files
+                    n     <leader>zcf               Find zsh config files
+
+--- Misc convenience keybinds
+
+                    n     ,,                        Switch back to previous buffer
+                    n     ZA                        Save all buffers and exit nvim
+

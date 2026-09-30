@@ -20,7 +20,7 @@ function M.show()
     vim.bo[buf].buftype = "nofile"
     vim.bo[buf].bufhidden = "wipe"
     vim.bo[buf].swapfile = false
-    vim.bo[buf].modifiable = false
+    vim.bo[buf].modifiable = true
     vim.bo[buf].filetype = "text"
 
     local win = vim.api.nvim_open_win(buf, true, {

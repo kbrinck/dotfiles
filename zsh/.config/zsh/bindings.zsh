@@ -2,6 +2,9 @@
 # Key bindings
 # ---------
 
+# Make every new prompt start in insert mode
+ZVM_LINE_INIT_MODE=i
+
 # Cursor shape per vi mode
 ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BEAM
 ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK

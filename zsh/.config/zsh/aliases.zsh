@@ -91,3 +91,24 @@ alias gcb="git checkout"
 alias python='python3'            # Type "python" to run Python 3
 alias pip='pip3'                  # Type "pip" to use pip3
 alias ruffc='uv run ruff check --output-format=full'
+
+# -----------------------------------------------------------------------------
+# Navigate via yazi
+# -----------------------------------------------------------------------------
+
+function y() {
+    if ! command -v yazi >/dev/null 2>&1; then
+        echo "yazi is not installed"
+        return 1
+    fi
+
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+
+    if cwd="$(command cat -- "$tmp")" &&
+       [[ -n "$cwd" && "$cwd" != "$PWD" ]]; then
+        builtin cd -- "$cwd"
+    fi
+
+    rm -f -- "$tmp"
+}
