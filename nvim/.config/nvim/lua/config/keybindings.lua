@@ -3,19 +3,19 @@
 ---
 local builtin = require("telescope.builtin")
 
-vim.keymap.set("n", "<leader>npf", function()
-  builtin.find_files({
-    cwd = vim.fn.stdpath("config") .. "/lua/plugins",
-  })
-end, { desc = "Find Neovim plugin files" })
+---vim.keymap.set("n", "<leader>npf", function()
+---  builtin.find_files({
+---    cwd = vim.fn.stdpath("config") .. "/lua/plugins",
+---  })
+---end, { desc = "Find Neovim plugin files" })
 
 --- Key binding to allow traversal in Telescope picker
 ---
-vim.keymap.set("n", "<leader>bnc", function()
-  require("telescope").extensions.file_browser.file_browser({
-    path = vim.fn.stdpath("config"),
-  })
-end, { desc = "Browse Neovim config" })
+---vim.keymap.set("n", "<leader>bnc", function()
+---  require("telescope").extensions.file_browser.file_browser({
+---    path = vim.fn.stdpath("config"),
+---  })
+---end, { desc = "Browse Neovim config" })
 
 --- Key binding to move to definitions et al using Telescope
 ---
@@ -31,17 +31,33 @@ vim.keymap.set("n", "gi", function()
   require("telescope.builtin").lsp_implementations()
 end, { desc = "Go to implementation" })
 
-vim.keymap.set("n", "<leader>ncf", function()
+vim.keymap.set("n", "<leader>kc", function()
+  require("telescope.builtin").find_files({
+    cwd = vim.fn.expand("~/.config/kitty"),
+    hidden=true,
+  })
+end, { desc = "Browse kitty config files" })
+
+vim.keymap.set("n", "<leader>nc", function()
   require("telescope.builtin").find_files({
     cwd = vim.fn.expand("~/.config/nvim"),
+    hidden=true,
   })
-end, { desc = "Find nvim config files" })
+end, { desc = "Browse nvim config files" })
 
-vim.keymap.set("n", "<leader>zcf", function()
+vim.keymap.set("n", "<leader>yc", function()
+  require("telescope.builtin").find_files({
+    cwd = vim.fn.expand("~/.config/yazi"),
+    hidden=true,
+  })
+end, { desc = "Browse zsh config files" })
+
+vim.keymap.set("n", "<leader>zc", function()
   require("telescope.builtin").find_files({
     cwd = vim.fn.expand("~/.config/zsh"),
+    hidden=true,
   })
-end, { desc = "Find zsh config files" })
+end, { desc = "Browse zsh config files" })
 
 --- vim.keymap.set("n", "gd", function()
   --- vim.lsp.buf.definition()

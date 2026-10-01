@@ -30,7 +30,6 @@ fugitive            n     <leader>dg                Git diff current file
                     n     <leader>gb                Git blame
                     N     <leader>gs                Git status
 
-
 lazygit.lua         n     <leader>gg                Lazy Git
                     n     <leader>gc                Lazy Git config
                     n     <leader>gf                Lazy Git current file
@@ -97,20 +96,27 @@ Diffs               n     ]c                        Next change
                     n     <F2>                      Push across current change and move to next one
                     n     <F3>                      Push across current change
                     n     <F4>                      Pull across current change
-                    n     <F5>                      Push all diff changes
-                    n     <F6>                      Pull all diff changes
+                    n     <C-F3>                    Push all diff changes
+                    n     <C-F4>                    Pull all diff changes
 
                     :     :diffupdate               Recalculate/update the diff
                     :     :diffoff                  Turn off diff mode for the current window
                     :     :diffthis                 Enable diff mode for the current window
                     :     :set diffopt?             See your diff options
 
+--- Diagnostics
+
+                    n     <leader>dd                Show line diagnostics
+                    n     ]d                        Next diagnostic
+                    n     [d                        Previous diagnostic
+                    n     <leader>dD                List file diagnostics
+
 --- Config files
 
-                    n     <leader>bnc               Browse Neovim config
-                    n     <leader>npf               Find Neovim plugin files
-                    n     <leader>ncf               Find nvim config files
-                    n     <leader>zcf               Find zsh config files
+                    n     <leader>cc                Browse nvim config files
+                    n     <leader>nc                Browse nvim config files
+                    n     <leader>yc                Browse yazi config files
+                    n     <leader>zc                Browse zsh config files
 
 --- Misc convenience keybinds
 
