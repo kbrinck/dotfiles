@@ -70,6 +70,7 @@ alias df="df -h"
 alias nv="nvim"
 alias nvd='nvim -c "lua require(\"dapui\").open()"'
 alias nvq="nvim-qt"
+alias upd="sudo pacman -Syu; yay -Syu"
 
 # -----------------------------------------------------------------------------
 # GIT-related aliases
