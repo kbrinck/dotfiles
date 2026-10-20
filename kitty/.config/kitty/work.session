@@ -4,11 +4,11 @@ launch zsh
 new_tab "Shell"
 launch zsh
 
-new_tab "Neovim"
-launch --cwd ~/Dev zsh -c 'exec nvim'
+#new_tab "Neovim"
+#launch --cwd ~/Dev zsh -c 'exec nvim'
 
-new_tab "Keybinds"
-launch --cwd ~/.config/nvim zsh -c 'exec nvim keybinds.txt'
+#new_tab "Keybinds"
+#launch --cwd ~/.config/nvim zsh -c 'exec nvim keybinds.txt'
 
 new_tab "Yazi"
 launch --cwd ~/Dev/ zsh -c 'exec yazi'
