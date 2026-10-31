@@ -13,10 +13,10 @@ alias S='exec zsh'
 
 if [ -e /usr/bin/eza ]
 then
-	alias ls='eza --icons'
-	alias ll='eza -lh --icons --git'
-	alias la='eza -lah --icons --git'
-	alias tree='eza --tree --icons'
+	alias ls='eza --icons auto'
+	alias ll='eza -lh --icons auto --git'
+	alias la='eza -lah --icons auto --git'
+	alias tree='eza --tree --icons auto'
 
 	# Reuse ls completions for eza (avoids defining a separate completion function)
 	compdef eza=ls
@@ -71,6 +71,7 @@ alias nv="nvim"
 alias nvd='nvim -c "lua require(\"dapui\").open()"'
 alias nvq="nvim-qt"
 alias upd="sudo pacman -Syu; yay -Syu"
+alias ev="nvim -c 'lua require(\"nvim-tree.api\").tree.toggle({ find_file = true, update_root = true, focus = true })'"
 
 # -----------------------------------------------------------------------------
 # GIT-related aliases

@@ -17,8 +17,8 @@ floatterm.lua       —     <leader>tN                New float term
                     —     <leader>tp                Previous float term
                     —     <leader>tn                Next float term
                     —     <leader>tt                Toggle float term
-                    n     <F5>                      New float term
-                    i     <F5>                      New float term
+                    n     <S-F5>                    New float term
+                    i     <S-F5>                    New float term
                     n     <leader>tr                New float term
 
 fzf-lua.lua         n     <leader>ff                Files
@@ -35,9 +35,11 @@ lazygit.lua         n     <leader>gg                Lazy Git
                     n     <leader>gf                Lazy Git current file
 
 nvim-dap.lua        n     <F5>                      Continue
+                    n     <F6>                      Toggle breakpoint
                     n     <F10>                     Step over
                     n     <F11>                     Step into
                     n     <F12>                     Step out
+                    n     <C-F5>                    Toggle UI
                     n     <leader>db                Toggle breakpoint
                     n     <leader>dc                Continue
                     n     <leader>do                Step over
