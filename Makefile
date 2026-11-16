@@ -1,22 +1,23 @@
 .PHONY: bash kitty nvim vim zsh dev
 
 bash:
-	stow bash
+	stow --adopt  bash
 
 kitty:
-	stow kitty
+	stow --adopt  kitty
+	sudo pacman -S kitty
 
 nvim:
-	stow nvim
+	stow --adopt  nvim
 	sudo pacman -S neovim pyright
 
 vim:
-	stow vim
+	stow --adopt  vim
 	sudo pacman -S gvim
 
 zsh:
-	stow zsh
-	sudo pacman -S eza fzf zoxide starship ripgrep btop
+	stow --adopt  zsh
+	sudo pacman -S bat eza fzf zoxide starship ripgrep btop
 
 dev:
 	sudo pacman -S git pycharm-community-edition code uv
