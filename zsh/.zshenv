@@ -1,4 +1,5 @@
 # ~/.config/zsh/.zshenv
+echo "Executing .zshenv"
 #
 # -----------------------------------------------------------------------------
 # XDG base directories
@@ -39,4 +40,4 @@ export PATH="$HOME/.bin:$PATH"
 # Possibly needed to get ssh-agent working
 # -----------------------------------------------------------------------------
 #
-export SSH_AUTH_SOCK=${SSH_AUTH_SOCK:-/run/user/$(id -u)/ssh-agent.socket}
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"

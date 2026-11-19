@@ -178,6 +178,22 @@ return {
       -- the project interpreter is used only for the program being debugged.
       dap_python.setup("python3")
 
+      -- Find the right venv
+      dap.adapters.python = function(callback)
+          local venv_python = select(1, find_venv())
+
+          if not venv_python then
+            vim.notify("No .venv/bin/python found for the current file", vim.log.levels.ERROR)
+            return
+          end
+
+          callback({
+            type = "executable",
+            command = venv_python,
+            args = { "-m", "debugpy.adapter" },
+          })
+        end
+
       local history_run_root = "/home/keith/Dev/injuries/main"
 
       table.insert(dap.configurations.python, {
