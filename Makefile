@@ -20,7 +20,7 @@ vim:
 	sudo pacman -S gvim
 
 zsh:
-	stow --adopt zsh starship
+	stow --adopt zsh 
 	sudo pacman -S bat eza fzf zoxide starship ripgrep btop
 
 dev:
